@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Plant Weather</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="app">
+
+    <h1>Plant Weather</h1>
+
+    <form id="searchForm">
+      <input id="cityInput" type="text" placeholder="City" />
+      <input id="stateInput" type="text" placeholder="State (optional)" />
+      <button type="submit">Grow Forecast</button>
+    </form>
+
+    <!-- Loader -->
+    <div id="loader" class="moth-loader hidden">
+      <div class="moth-container">
+        <div class="moth">
+          <div class="antenna left"></div>
+          <div class="antenna right"></div>
+          <div class="wing left top"></div>
+          <div class="wing left bottom"></div>
+          <div class="body"></div>
+          <div class="head"></div>
+          <div class="wing right top"></div>
+          <div class="wing right bottom"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODAY WEATHER -->
+    <section id="weatherCard" class="weather-card hidden">
+      <div class="today-badge">Today</div>
+      <h2 id="city"></h2>
+      <img id="icon" alt="Weather icon" />
+      <p id="condition"></p>
+
+      <div class="temps">
+        <span id="currentTemp"></span>
+        <span id="highLow"></span>
+      </div>
+
+      <div class="details">
+        <p id="precip"></p>
+        <p id="humidity"></p>
+        <p id="wind"></p>
+      </div>
+    </section>
+
+    <!-- WEEKLY FORECAST (TOMORROW → NEXT 6 DAYS) -->
+    <section id="weeklyForecast" class="weekly hidden"></section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
