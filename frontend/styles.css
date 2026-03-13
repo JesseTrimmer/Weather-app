@@ -1,64 +1,97 @@
 /* ================================
-   RESET
+   CSS VARIABLES
 ================================ */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", system-ui, sans-serif;
+:root {
+  --glass: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-hover: rgba(255, 255, 255, 0.16);
+  --text-primary: #f0ede8;
+  --text-secondary: rgba(240, 237, 232, 0.60);
+  --accent: #c9a96e;
+  --accent-light: rgba(201, 169, 110, 0.15);
+  --shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
 }
 
 /* ================================
-   PAGE BACKGROUND (KEEP ASSETS)
+   RESET
+================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================================
+   BODY
 ================================ */
 body {
   min-height: 100vh;
-  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
 
   background-image:
-    linear-gradient(rgba(10, 30, 20, 0.6), rgba(10, 30, 20, 0.6)),
+    linear-gradient(135deg, rgba(8, 20, 35, 0.72) 0%, rgba(15, 35, 25, 0.68) 100%),
     url("./assets/background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2rem 1rem;
 }
 
 /* ================================
-   APP CARD
+   APP SHELL
 ================================ */
 .app {
-  width: 900px;
-  max-width: 95vw;
-  padding: 2rem 2.5rem;
-
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.18);
-
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.35),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.15);
-
+  width: 1020px;
+  max-width: 98vw;
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 2rem;
-
-  color: #f1f8e9;
+  grid-template-columns: 420px 1fr;
+  gap: 1.5rem;
+  align-items: start;
 }
 
 /* ================================
-   TITLE
+   COLUMNS
 ================================ */
+.left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ================================
+   HEADER
+================================ */
+.app-header {
+  padding: 0 0.25rem;
+}
+
 h1 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #e8f5e9;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 0.35rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* ================================
@@ -66,184 +99,358 @@ h1 {
 ================================ */
 form {
   display: flex;
-  gap: 0.75rem;
-  justify-content: center;
-  margin-bottom: 1.5rem;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
 }
 
 form input {
-  width: 150px;
-  padding: 0.75rem 1rem;
-  border-radius: 999px;
-  border: none;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.25);
+  flex: 1;
+  padding: 0.75rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  backdrop-filter: blur(12px);
 }
 
 form input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
+}
+
+form input:focus {
+  border-color: var(--accent);
+  background: var(--glass-hover);
 }
 
 form button {
-  padding: 0.75rem 1.3rem;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg, #81c784, #4caf50);
-  color: #ffffff;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.78rem 1.4rem;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+form button:hover {
+  background: var(--accent);
+  color: #1a1008;
+}
+
+.btn-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
+}
+
+form button:hover .btn-arrow {
+  transform: translateX(3px);
 }
 
 /* ================================
-   WEATHER OUTPUT
+   LOADER
 ================================ */
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(201, 169, 110, 0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loader-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ================================
+   TODAY CARD
+================================ */
+.weather-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 1.6rem;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.today-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-left {
+  flex: 1;
+}
+
 #city {
-  font-size: 1.4rem;
-  margin-bottom: 0.4rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.15;
+  margin-bottom: 0.2rem;
+}
+
+#condition {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.current-temp-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+#currentTemp {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1;
 }
 
 #icon {
-  width: 80px;
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  margin-top: -4px;
 }
 
-.temps {
-  margin: 0.5rem 0;
+.divider {
+  height: 1px;
+  background: var(--glass-border);
+  margin: 1.2rem 0;
 }
 
-.details {
-  font-size: 0.9rem;
-  color: #dcedc8;
+/* ================================
+   DETAIL ITEMS
+================================ */
+.card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
 }
 
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.detail-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.detail-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.detail-label {
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.detail-value {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+/* ================================
+   FORECAST HEADER
+================================ */
+.forecast-header {
+  padding: 0 0.25rem;
+}
+
+.forecast-header h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+/* ================================
+   WEEKLY FORECAST CARDS
+================================ */
+.weekly {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.week-day {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 0.85rem 1.1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  display: grid;
+  grid-template-columns: 52px 36px 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+
+  transition: background 0.2s, border-color 0.2s;
+  animation: fadeUp 0.35s ease both;
+}
+
+.week-day:hover {
+  background: var(--glass-hover);
+  border-color: rgba(201, 169, 110, 0.25);
+}
+
+.week-day img {
+  width: 36px;
+  height: 36px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+}
+
+.day-name {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+}
+
+.day-center {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.day-condition {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
+.day-precip {
+  font-size: 0.72rem;
+  color: #7ec8e3;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.day-precip svg {
+  width: 11px;
+  height: 11px;
+}
+
+.day-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.12rem;
+}
+
+.day-high {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.day-low {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* Staggered animation for forecast cards */
+.week-day:nth-child(1) { animation-delay: 0.05s; }
+.week-day:nth-child(2) { animation-delay: 0.10s; }
+.week-day:nth-child(3) { animation-delay: 0.15s; }
+.week-day:nth-child(4) { animation-delay: 0.20s; }
+.week-day:nth-child(5) { animation-delay: 0.25s; }
+.week-day:nth-child(6) { animation-delay: 0.30s; }
+.week-day:nth-child(7) { animation-delay: 0.35s; }
+
+/* ================================
+   HIDDEN
+================================ */
 .hidden {
   display: none !important;
 }
 
 /* ================================
-   WEEKLY FORECAST (CLEANED)
+   RESPONSIVE
 ================================ */
-.weekly {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
+@media (max-width: 720px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
 
-.week-day {
-  position: relative;
-  background: rgba(255, 255, 255, 0.18);
-  border-radius: 16px;
-  padding: 0.75rem 0.5rem;
+  h1 {
+    font-size: 1.9rem;
+  }
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-
-  font-size: 0.8rem;
-  text-align: center;
-}
-
-.week-day img {
-  width: 32px;
-}
-
-/* ================================
-   TODAY BADGE
-   (JS just adds class="today")
-================================ */
-.week-day.today {
-  outline: 2px solid #a5d6a7;
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.week-day.today::before {
-  content: "Today";
-  position: absolute;
-  top: -10px;
-  padding: 2px 8px;
-
-  font-size: 0.65rem;
-  font-weight: 600;
-
-  color: #1b5e20;
-  background: #a5d6a7;
-  border-radius: 999px;
-}
-
-/* ================================
-   MOTH LOADER (UNCHANGED)
-================================ */
-.moth-loader {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem 0;
-}
-
-.moth-container {
-  width: 80px;
-  height: 80px;
-}
-
-.moth {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-/* HEAD */
-.head {
-  width: 16px;
-  height: 16px;
-  background: #3a220a;
-  border-radius: 50%;
-  position: absolute;
-  top: 12px;
-  left: 32px;
-}
-
-/* ANTENNAE */
-.antenna {
-  width: 2px;
-  height: 18px;
-  background: #3a220a;
-  position: absolute;
-  top: 4px;
-}
-
-.antenna.left { left: 30px; transform: rotate(-25deg); }
-.antenna.right { left: 46px; transform: rotate(25deg); }
-
-/* WINGS */
-.wing {
-  position: absolute;
-  background: rgba(212,163,115,0.85);
-  border-radius: 60% 20% 50% 50%;
-}
-
-.wing.top { height: 34px; width: 38px; top: 18px; }
-.wing.bottom { height: 28px; width: 34px; top: 38px; }
-
-.wing.left { left: 10px; transform-origin: right center; }
-.wing.right { left: 42px; transform-origin: left center; }
-
-.wing.left.top { animation: flap-left-top 1s infinite ease-in-out; }
-.wing.left.bottom { animation: flap-left-bottom 1s infinite ease-in-out; }
-.wing.right.top { animation: flap-right-top 1s infinite ease-in-out; }
-.wing.right.bottom { animation: flap-right-bottom 1s infinite ease-in-out; }
-
-/* ================================
-   ANIMATIONS
-================================ */
-@keyframes flap-left-top {
-  50% { transform: rotateZ(30deg); }
-}
-@keyframes flap-left-bottom {
-  50% { transform: rotateZ(20deg); }
-}
-@keyframes flap-right-top {
-  50% { transform: rotateZ(-30deg); }
-}
-@keyframes flap-right-bottom {
-  50% { transform: rotateZ(-20deg); }
+  .week-day {
+    grid-template-columns: 44px 32px 1fr auto;
+  }
 }

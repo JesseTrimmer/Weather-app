@@ -2,59 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Plant Weather</title>
+  <title>Your Weather Forecast</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <main class="app">
 
-    <h1>Plant Weather</h1>
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+      <header class="app-header">
+        <h1>Your Weather Forecast</h1>
+        <p class="subtitle">Enter a location to get started</p>
+      </header>
 
-    <form id="searchForm">
-      <input id="cityInput" type="text" placeholder="City" />
-      <input id="stateInput" type="text" placeholder="State (optional)" />
-      <button type="submit">Grow Forecast</button>
-    </form>
-
-    <!-- Loader -->
-    <div id="loader" class="moth-loader hidden">
-      <div class="moth-container">
-        <div class="moth">
-          <div class="antenna left"></div>
-          <div class="antenna right"></div>
-          <div class="wing left top"></div>
-          <div class="wing left bottom"></div>
-          <div class="body"></div>
-          <div class="head"></div>
-          <div class="wing right top"></div>
-          <div class="wing right bottom"></div>
+      <form id="searchForm">
+        <div class="input-group">
+          <input id="cityInput" type="text" placeholder="City" autocomplete="off" />
+          <input id="stateInput" type="text" placeholder="State" autocomplete="off" />
         </div>
+        <button type="submit">
+          <span class="btn-text">Get Forecast</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <!-- Loader -->
+      <div id="loader" class="loader hidden">
+        <div class="spinner"></div>
+        <p class="loader-text">Fetching forecast…</p>
       </div>
+
+      <!-- TODAY WEATHER -->
+      <section id="weatherCard" class="weather-card hidden">
+        <div class="today-label">Today</div>
+        <div class="card-top">
+          <div class="card-left">
+            <h2 id="city"></h2>
+            <p id="condition"></p>
+            <div class="current-temp-wrap">
+              <span id="currentTemp"></span>
+            </div>
+          </div>
+          <img id="icon" alt="Weather icon" />
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-details">
+          <div class="detail-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <div>
+              <span class="detail-label">High / Low</span>
+              <span id="highLow" class="detail-value"></span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <div>
+              <span class="detail-label">Precipitation</span>
+              <span id="precip" class="detail-value"></span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"/><path d="M12 8v4l3 3"/></svg>
+            <div>
+              <span class="detail-label">Humidity</span>
+              <span id="humidity" class="detail-value"></span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+            <div>
+              <span class="detail-label">Wind</span>
+              <span id="wind" class="detail-value"></span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <!-- TODAY WEATHER -->
-    <section id="weatherCard" class="weather-card hidden">
-      <div class="today-badge">Today</div>
-      <h2 id="city"></h2>
-      <img id="icon" alt="Weather icon" />
-      <p id="condition"></p>
-
-      <div class="temps">
-        <span id="currentTemp"></span>
-        <span id="highLow"></span>
+    <!-- RIGHT COLUMN: WEEKLY FORECAST -->
+    <div class="right-col">
+      <div class="forecast-header hidden" id="forecastHeader">
+        <h3>7-Day Outlook</h3>
       </div>
-
-      <div class="details">
-        <p id="precip"></p>
-        <p id="humidity"></p>
-        <p id="wind"></p>
-      </div>
-    </section>
-
-    <!-- WEEKLY FORECAST (TOMORROW → NEXT 6 DAYS) -->
-    <section id="weeklyForecast" class="weekly hidden"></section>
+      <section id="weeklyForecast" class="weekly hidden"></section>
+    </div>
 
   </main>
 
