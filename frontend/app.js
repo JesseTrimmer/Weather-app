@@ -1,23 +1,25 @@
 // ================================
 // DOM REFERENCES
 // ================================
-const form         = document.getElementById("searchForm");
-const weatherCard  = document.getElementById("weatherCard");
-const weeklyEl     = document.getElementById("weeklyForecast");
+const form           = document.getElementById("searchForm");
+const weatherCard    = document.getElementById("weatherCard");
+const weeklyEl       = document.getElementById("weeklyForecast");
 const forecastHeader = document.getElementById("forecastHeader");
-const loader       = document.getElementById("loader");
+const hourlySection  = document.getElementById("hourlySection");
+const hourlyStrip    = document.getElementById("hourlyStrip");
+const loader         = document.getElementById("loader");
 
-const cityInput    = document.getElementById("cityInput");
-const stateInput   = document.getElementById("stateInput");
+const cityInput      = document.getElementById("cityInput");
+const stateInput     = document.getElementById("stateInput");
 
-const cityEl       = document.getElementById("city");
-const iconEl       = document.getElementById("icon");
-const conditionEl  = document.getElementById("condition");
-const currentTempEl= document.getElementById("currentTemp");
-const highLowEl    = document.getElementById("highLow");
-const precipEl     = document.getElementById("precip");
-const humidityEl   = document.getElementById("humidity");
-const windEl       = document.getElementById("wind");
+const cityEl         = document.getElementById("city");
+const iconEl         = document.getElementById("icon");
+const conditionEl    = document.getElementById("condition");
+const currentTempEl  = document.getElementById("currentTemp");
+const highLowEl      = document.getElementById("highLow");
+const precipEl       = document.getElementById("precip");
+const humidityEl     = document.getElementById("humidity");
+const windEl         = document.getElementById("wind");
 
 // ================================
 // FORM SUBMIT
@@ -36,6 +38,7 @@ form.addEventListener("submit", async (e) => {
   weatherCard.classList.add("hidden");
   weeklyEl.classList.add("hidden");
   forecastHeader.classList.add("hidden");
+  hourlySection.classList.add("hidden");
   loader.classList.remove("hidden");
 
   const query = state ? `${city}, ${state}` : city;
@@ -51,6 +54,7 @@ form.addEventListener("submit", async (e) => {
 
     updateWeatherUI(data);
     updateWeeklyUI(data.weekly);
+    updateHourlyUI(data.hourly);
 
   } catch (err) {
     console.error(err);
@@ -64,15 +68,15 @@ form.addEventListener("submit", async (e) => {
 // TODAY WEATHER
 // ================================
 function updateWeatherUI(data) {
-  cityEl.textContent = data.city;
-  iconEl.src = `https:${data.icon}`;
-  iconEl.alt = data.condition;
+  cityEl.textContent      = data.city;
+  iconEl.src              = `https:${data.icon}`;
+  iconEl.alt              = data.condition;
   conditionEl.textContent = data.condition;
   currentTempEl.textContent = `${Math.round(data.currentTemp)}°F`;
-  highLowEl.textContent = `${Math.round(data.high)}° / ${Math.round(data.low)}°F`;
-  precipEl.textContent  = `${data.precipType} — ${data.precipChance}% chance`;
-  humidityEl.textContent = `${data.humidity}%`;
-  windEl.textContent = `${data.windMph} mph`;
+  highLowEl.textContent   = `${Math.round(data.high)}° / ${Math.round(data.low)}°F`;
+  precipEl.textContent    = `${data.precipType} — ${data.precipChance}% chance`;
+  humidityEl.textContent  = `${data.humidity}%`;
+  windEl.textContent      = `${data.windMph} mph`;
 
   weatherCard.classList.remove("hidden");
 }
@@ -87,14 +91,8 @@ function updateWeeklyUI(weekly) {
     const el = document.createElement("div");
     el.className = "week-day";
 
-    const dayName = new Date(day.date + "T12:00:00").toLocaleDateString("en-US", {
-      weekday: "short",
-    });
-
-    const fullDate = new Date(day.date + "T12:00:00").toLocaleDateString("en-US", {
-      month: "short", day: "numeric"
-    });
-
+    const dayName = new Date(day.date + "T12:00:00").toLocaleDateString("en-US", { weekday: "short" });
+    const fullDate = new Date(day.date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
     const precipColor = day.precipChance >= 50 ? "#7ec8e3" : "rgba(240,237,232,0.45)";
 
     el.innerHTML = `
@@ -118,4 +116,44 @@ function updateWeeklyUI(weekly) {
 
   forecastHeader.classList.remove("hidden");
   weeklyEl.classList.remove("hidden");
+}
+
+// ================================
+// HOURLY FORECAST
+// ================================
+function updateHourlyUI(hourly) {
+  hourlyStrip.innerHTML = "";
+
+  hourly.forEach((hour, i) => {
+    const el = document.createElement("div");
+    el.className = "hour-card" + (i === 0 ? " is-now" : "");
+
+    const label = i === 0 ? "Now" : formatHour(hour.hour);
+    const showPrecip = hour.precipChance > 0;
+
+    el.innerHTML = `
+      <span class="hour-time">${label}</span>
+      <img src="https:${hour.icon}" alt="${hour.condition}" />
+      <span class="hour-temp">${hour.temp}°</span>
+      ${showPrecip ? `
+        <span class="hour-precip">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6 10 4 14 4 17a8 8 0 0 0 16 0c0-3-2-7-8-15z"/></svg>
+          ${hour.precipChance}%
+        </span>` : `<span class="hour-precip" style="opacity:0">—</span>`}
+      <span class="hour-wind">${hour.windMph} mph</span>
+    `;
+
+    hourlyStrip.appendChild(el);
+  });
+
+  hourlySection.classList.remove("hidden");
+}
+
+// ================================
+// HELPERS
+// ================================
+function formatHour(h) {
+  if (h === 0)  return "12 AM";
+  if (h === 12) return "12 PM";
+  return h < 12 ? `${h} AM` : `${h - 12} PM`;
 }

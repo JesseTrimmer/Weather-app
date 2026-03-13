@@ -454,3 +454,112 @@ form button:hover .btn-arrow {
     grid-template-columns: 44px 32px 1fr auto;
   }
 }
+
+/* ================================
+   HOURLY FORECAST STRIP
+================================ */
+.hourly-section {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  animation: fadeUp 0.4s ease both;
+}
+
+.section-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0 0.25rem;
+}
+
+.hourly-strip {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,169,110,0.3) transparent;
+}
+
+.hourly-strip::-webkit-scrollbar {
+  height: 4px;
+}
+
+.hourly-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hourly-strip::-webkit-scrollbar-thumb {
+  background: rgba(201,169,110,0.3);
+  border-radius: 999px;
+}
+
+.hour-card {
+  flex-shrink: 0;
+  width: 72px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 0.65rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: default;
+}
+
+.hour-card:hover {
+  background: var(--glass-hover);
+  border-color: rgba(201,169,110,0.3);
+}
+
+.hour-card.is-now {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.hour-time {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
+.hour-card.is-now .hour-time {
+  color: var(--accent);
+}
+
+.hour-card img {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+}
+
+.hour-temp {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.hour-precip {
+  font-size: 0.65rem;
+  color: #7ec8e3;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.hour-precip svg {
+  width: 9px;
+  height: 9px;
+}
+
+.hour-wind {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
