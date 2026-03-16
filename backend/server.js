@@ -73,10 +73,15 @@ app.get("/api/weather", async (req, res) => {
       "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,is_day" +
       "&hourly=temperature_2m,weather_code,precipitation_probability,wind_speed_10m,is_day" +
       "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
-      "&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=8"
+      "&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&forecast_days=8"
     );
     const weatherData = await weatherRes.json();
 
+
+if (!weatherData.daily || !weatherData.current) {
+  console.error("Bad weather API response:", JSON.stringify(weatherData));
+  return res.status(500).json({ error: "Weather fetch failed" });
+}
     const current = weatherData.current;
     const daily   = weatherData.daily;
     const hourly  = weatherData.hourly;
