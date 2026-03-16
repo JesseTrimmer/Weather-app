@@ -45,8 +45,8 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const res = await fetch(
-      `http://localhost:3000/api/weather?city=${encodeURIComponent(query)}`
-    );
+  `https://plant-weather.onrender.com/api/weather?city=${encodeURIComponent(query)}`
+);
 
     if (!res.ok) throw new Error("Fetch failed");
 
